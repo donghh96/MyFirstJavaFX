@@ -8,8 +8,8 @@ package MyFirstJavaFX;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
@@ -19,17 +19,15 @@ import java.util.ArrayList;
 public class DataBase {
     
     static Connection conn;
-    static Statement st;
     static ArrayList<User> users = new ArrayList<User>();
     
     public static ArrayList<User> getUsers() {
         conn = getConnection();
-        String sql = "select * from user";
         users.clear();
         
         try{
-            st = conn.createStatement();
-            ResultSet rs = st.executeQuery(sql);
+            PreparedStatement pst = conn.prepareStatement("select * from user");
+            ResultSet rs = pst.executeQuery();
             while(rs.next()) {
                 String name = rs.getString("name");
                 String password = rs.getString("password");
@@ -51,11 +49,12 @@ public class DataBase {
     
     public static void addUser(String name, String password) {
         conn = getConnection();
-        String sql = "insert into user values ('" + name + "','" + password + "');";
         
         try{
-            st = conn.createStatement();
-            st.executeUpdate(sql);          
+            PreparedStatement pst = conn.prepareStatement("insert into user values (?,?)");
+            pst.setString(1, name);
+            pst.setString(2, password);
+            pst.executeUpdate();          
         }catch(Exception e) {
             System.out.println("Update DB error" + e.getMessage());
         }finally{
