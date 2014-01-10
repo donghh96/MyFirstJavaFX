@@ -8,12 +8,24 @@
 
 <AnchorPane id="AnchorPane" prefHeight="200.0" prefWidth="320.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="MyFirstJavaFX.UserPageController">
   <children>
-    <Button fx:id="button" layoutX="60.0" layoutY="30.0" onAction="#handleButtonAction" text="Show users" />
-    <TableView fx:id="tableview" layoutX="60.0" layoutY="77.0" prefHeight="102.0" prefWidth="200.0">
+    <Button fx:id="showuserbutton" layoutX="38.0" layoutY="25.0" onAction="#showUsers" prefWidth="87.0" text="Show users" />
+    <Button fx:id="adduserbutton" layoutX="138.0" layoutY="25.0" mnemonicParsing="false" onAction="#addUser" text="Add user" />
+    <Button fx:id="clearbutton" onAction="#clearUsers" layoutX="221.0" layoutY="24.0" mnemonicParsing="false" text="Clear" />
+    <TableView fx:id="tableview" layoutX="40.0" layoutY="61.0" prefHeight="125.0" prefWidth="240.0">
       <columns>
-        <TableColumn prefWidth="75.0" text="Name" fx:id="nameColumn" />
-        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="123.0" text="Password" fx:id="passwordColumn" />
+        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="97.0" text="Name" fx:id="nameColumn" />
+        <TableColumn maxWidth="5000.0" minWidth="10.0" prefWidth="168.0" text="Password" fx:id="passwordColumn" />
       </columns>
     </TableView>
+    <AnchorPane fx:id="addpane" layoutX="14.0" layoutY="44.0" prefHeight="104.0" prefWidth="292.0" visible="false">
+      <children>
+        <Label layoutX="22.0" layoutY="14.0" text="Name"  />
+        <Label layoutX="22.0" layoutY="58.0" text="Password"  />
+        <TextField fx:id="nametextfield" layoutX="78.0" layoutY="14.0" prefWidth="200.0"  />
+        <TextField fx:id="passwordtextfield" layoutX="78.0" layoutY="58.0" prefWidth="200.0"  />
+        <Button fx:id="okbutton" onAction="#confirmAdd" layoutX="22.0" layoutY="80" text="OK" />
+        <Button fx:id="cancelbutton" onAction="#cancelAdd" layoutX="80.0" layoutY="80" text="Cancel" />
+      </children>
+    </AnchorPane>
   </children>
 </AnchorPane>

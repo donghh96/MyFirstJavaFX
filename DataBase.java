@@ -25,6 +25,7 @@ public class DataBase {
     public static ArrayList<User> getUsers() {
         conn = getConnection();
         String sql = "select * from user";
+        users.clear();
         
         try{
             st = conn.createStatement();
@@ -36,11 +37,34 @@ public class DataBase {
 
                 users.add(new User(name, password));              
             } 
-            conn.close();
         }catch(Exception e) {
             System.out.println("Query DB error" + e.getMessage());
+        }finally{
+            try{
+                conn.close();
+            }catch(Exception e){
+                System.out.println("Close DB connection error" + e.getMessage());
+            }
         }
         return users;
+    }
+    
+    public static void addUser(String name, String password) {
+        conn = getConnection();
+        String sql = "insert into user values ('" + name + "','" + password + "');";
+        
+        try{
+            st = conn.createStatement();
+            st.executeUpdate(sql);          
+        }catch(Exception e) {
+            System.out.println("Update DB error" + e.getMessage());
+        }finally{
+            try{
+                conn.close();
+            }catch(Exception e){
+                System.out.println("Close DB connection error" + e.getMessage());
+            }
+        }
     }
     
     public static Connection getConnection() {
