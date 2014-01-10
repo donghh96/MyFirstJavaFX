@@ -65,7 +65,26 @@ public class DataBase {
             }
         }
     }
-    
+
+        public static void editUser(String name, String password) {
+        conn = getConnection();
+        
+        try{
+            PreparedStatement pst = conn.prepareStatement("update user set password=? where name=?");
+            pst.setString(1, password);
+            pst.setString(2, name);
+            pst.executeUpdate();          
+        }catch(Exception e) {
+            System.out.println("Update DB error" + e.getMessage());
+        }finally{
+            try{
+                conn.close();
+            }catch(Exception e){
+                System.out.println("Close DB connection error" + e.getMessage());
+            }
+        }
+    }
+
     public static Connection getConnection() {
         Connection con = null;
         

@@ -25,9 +25,9 @@ import javafx.scene.layout.AnchorPane;
 public class UserPageController implements Initializable {
 
     @FXML
-    TextField nametextfield, passwordtextfield;
+    TextField nametextfield, passwordtextfield, nametextfield2, passwordtextfield2;
     @FXML
-    AnchorPane tablepane, addpane;
+    AnchorPane tablepane, addpane, editpane;
     @FXML
     TableView<User> tableview = new TableView<User>();
     @FXML
@@ -60,11 +60,6 @@ public class UserPageController implements Initializable {
     }
     
     @FXML
-    private void clearUsers(ActionEvent event) {
-        tableview.getItems().clear();
-    }
-    
-    @FXML
     private void confirmAdd(ActionEvent event) {
         String name = nametextfield.getText();
         String password = passwordtextfield.getText();
@@ -79,6 +74,39 @@ public class UserPageController implements Initializable {
     private void cancelAdd(ActionEvent event) {
         tableview.setVisible(true);
         addpane.setVisible(false);
+    }
+    
+    @FXML
+    private void editUser(ActionEvent event) {
+        if(tableview.getSelectionModel().getSelectedItem() == null) {
+            System.out.println("Please select a record first");
+        }
+        else {
+            User user = (User)tableview.getSelectionModel().getSelectedItem();
+            tableview.setVisible(false);
+            editpane.setVisible(true);
+            nametextfield2.setText(user.getName());
+            passwordtextfield2.setText(user.getPassword());         
+        }        
+    }
+    
+    @FXML
+    private void confirmEdit(ActionEvent event) {
+        String name = nametextfield2.getText();
+        String password = passwordtextfield2.getText();
+        
+        System.out.println(password);
+        
+        DataBase.editUser(name, password);
+ 
+        tableview.setVisible(true);
+        editpane.setVisible(false);
+    }
+    
+    @FXML
+    private void cancelEdit(ActionEvent event) {
+        tableview.setVisible(true);
+        editpane.setVisible(false);
     }
     
     @Override
